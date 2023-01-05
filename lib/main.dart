@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import './question.dart';
+import 'answer.dart';
 
 void main() => runApp(HomePage());
 
 class HomePage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return _HomePageState();
-  }
+  State<StatefulWidget> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -16,7 +14,12 @@ class _HomePageState extends State<HomePage> {
 
   void _answerQuestion() {
     setState(() {
-      _questionIndex = _questionIndex + 1;
+      // if (_questionIndex == 1) {
+      //   _questionIndex = 0;
+      // } else {
+      //   _questionIndex = _questionIndex + 1;
+      // }
+      _questionIndex == 1 ? _questionIndex = 0 : _questionIndex++;
     });
   }
 
@@ -35,22 +38,10 @@ class _HomePageState extends State<HomePage> {
         body: Column(
           children: <Widget>[
             Question(questions[_questionIndex]),
-            ElevatedButton(
-              onPressed: _answerQuestion,
-              child: Text("Answer 1"),
-            ),
-            ElevatedButton(
-              onPressed: _answerQuestion,
-              child: Text("Answer 2"),
-            ),
-            ElevatedButton(
-              onPressed: _answerQuestion,
-              child: Text("Answer 3"),
-            ),
-            ElevatedButton(
-              onPressed: _answerQuestion,
-              child: Text("Answer 4"),
-            ),
+            Answer("Answer 1", _answerQuestion),
+            Answer("Answer 2", _answerQuestion),
+            Answer("Answer 3", _answerQuestion),
+            Answer("Answer 4", _answerQuestion),
           ],
         ),
       ),
