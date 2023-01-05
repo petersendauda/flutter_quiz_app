@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import './question.dart';
 import 'answer.dart';
+import './quiz.dart';
 
 void main() => runApp(HomePage());
 
@@ -13,7 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var _questionIndex = 0;
 
-  final questions = const [
+  final _questions = const [
     {
       "question": "What is your favorite color?",
       "answers": ["Black", "Blue", "Red", "Green"]
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> {
       // } else {
       //   _questionIndex = _questionIndex + 1;
       // }
-      _questionIndex == questions.length - 1
+      _questionIndex == _questions.length - 1
           ? _questionIndex = 0
           : _questionIndex++;
     });
@@ -48,22 +49,14 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: Text("Quiz App"),
         ),
-        body: _questionIndex == questions.length - 1
-            ? Column(
-                children: <Widget>[
-                  Question(questions[_questionIndex]["question"] as String),
-                  ...(questions[_questionIndex]["answers"] as List<String>)
-                      .map((answer) {
-                    return Answer(answer, _answerQuestion);
-                  }).toList()
-                ],
-              )
+        body: _questionIndex == _questions.length - 1
+            ? Quiz(_questions, _answerQuestion, _questionIndex)
             : Center(
                 child: Column(
                   children: [
                     Text("No More Questions!!!"),
                     ElevatedButton(
-                      onPressed: () => _questionIndex = 0,
+                      onPressed: () => setState(() => _questionIndex = 0),
                       child: Text("Start Again"),
                     )
                   ],
