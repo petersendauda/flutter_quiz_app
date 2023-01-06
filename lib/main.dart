@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './question.dart';
-import 'answer.dart';
 import './quiz.dart';
+import './result.dart';
 
 void main() => runApp(HomePage());
 
@@ -36,7 +35,7 @@ class _HomePageState extends State<HomePage> {
       // } else {
       //   _questionIndex = _questionIndex + 1;
       // }
-      _questionIndex == _questions.length - 1
+      _questionIndex == _questions.length
           ? _questionIndex = 0
           : _questionIndex++;
     });
@@ -46,23 +45,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text("Quiz App"),
-        ),
-        body: _questionIndex == _questions.length - 1
-            ? Quiz(_questions, _answerQuestion, _questionIndex)
-            : Center(
-                child: Column(
-                  children: [
-                    Text("No More Questions!!!"),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _questionIndex = 0),
-                      child: Text("Start Again"),
-                    )
-                  ],
-                ),
-              ),
-      ),
+          appBar: AppBar(
+            title: Text("Quiz App"),
+          ),
+          body: _questionIndex == _questions.length - 1
+              ? Quiz(_questions, _answerQuestion, _questionIndex)
+              : Result()),
     );
   }
 }
