@@ -12,45 +12,62 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var _questionIndex = 0;
+  var _totalScore = 0;
 
   final _questions = const [
     {
       "question": "What is your favorite color?",
-      "answers": ["Black", "Blue", "Red", "Green"]
+      "answers": [
+        {"text": "Black", "score": 10},
+        {"text": "Blue", "score": 5},
+        {"text": "Red", "score": 3},
+        {"text": "Green", "score": 1}
+      ]
     },
     {
       "question": "What is your favorite animal?",
-      "answers": ["Bird", "Cat", "Dog", "Lion"]
+      "answers": [
+        {"text": "Bird", "score": 10},
+        {"text": "Cat", "score": 5},
+        {"text": "Dog", "score": 3},
+        {"text": "Lion", "score": 1}
+      ]
     },
     {
       "question": "What is your favorite phone brand?",
-      "answers": ["Tecno", "SamSung", "Item", "IPhone"]
+      "answers": [
+        {"text": "Tecno", "score": 3},
+        {"text": "SamSung", "score": 5},
+        {"text": "Itel", "score": 10},
+        {"text": "IPhone", "score": 1}
+      ]
     }
   ];
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    _totalScore += score;
+
+    setState(() => _questionIndex++);
+  }
+
+  void _resetQuestions() {
     setState(() {
-      // if (_questionIndex == 1) {
-      //   _questionIndex = 0;
-      // } else {
-      //   _questionIndex = _questionIndex + 1;
-      // }
-      _questionIndex == _questions.length
-          ? _questionIndex = 0
-          : _questionIndex++;
+      _questionIndex = 0;
+      _totalScore = 0;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
           appBar: AppBar(
             title: Text("Quiz App"),
           ),
-          body: _questionIndex == _questions.length - 1
+          body: _questionIndex < _questions.length
               ? Quiz(_questions, _answerQuestion, _questionIndex)
-              : Result()),
+              : Result(_totalScore, _resetQuestions)),
     );
   }
 }
